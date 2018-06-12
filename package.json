@@ -4,7 +4,8 @@
   "description": "A Node.js RESTful API Project.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,12 @@
   },
   "homepage": "https://github.com/alan061997/myAPI-NodeJS#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "http": "0.0.0",
     "oracledb": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }
