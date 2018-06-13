@@ -14,3 +14,10 @@ create table orders (
     constraint pk_orders primary key (order_id),
     constraint fk_orders foreign key (product_id) references Products(product_id)
 );
+
+create table users (
+    user_id int not null,
+    user_email varchar(100) not null,
+    user_password varchar(60) not null,
+    constraint pk_users primary key (user_id)
+);

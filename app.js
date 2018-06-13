@@ -8,6 +8,7 @@ const db = require('./db');
 // Importing routes javascript files
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+const userRoutes = require('./api/routes/users');
 
 // API middleware
 
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 });
 
 // Routes that handle requests
+app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 
