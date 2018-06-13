@@ -3,17 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const morgan = require('morgan');
-// Import mySQL dependency
-const mysql = require('mysql');
-
-// Connecting to the mySQL database
-const db = mysql.createConnection({
-    host : "localhost",
-    user : "alan",
-    password : "1234",
-    database : "node-rest-shop"
-});
-
+const db = require('./db');
 
 // Importing routes javascript files
 const productRoutes = require('./api/routes/products');
@@ -41,9 +31,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-// Initialize database connection
-db.connect();
 
 // Routes that handle requests
 app.use('/products', productRoutes);
