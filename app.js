@@ -1,9 +1,21 @@
+// Importing node dependencies
 const express = require('express');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const app = express();
 const morgan = require('morgan');
+// Import mySQL dependency
+const mysql = require('mysql');
 
-// Importing routes javascript file
+// Connecting to the mySQL database
+const db = mysql.createConnection({
+    host : "localhost",
+    user : "alan",
+    password : "1234",
+    database : "node-rest-shop"
+});
+
+
+// Importing routes javascript files
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
@@ -15,7 +27,6 @@ app.use(bodyParser.json());
 
 // Morgan middleware request logger
 app.use(morgan('dev'));
-
 
 // CORS error handler
 app.use((req, res, next) => {
@@ -30,6 +41,9 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// Initialize database connection
+db.connect();
 
 // Routes that handle requests
 app.use('/products', productRoutes);

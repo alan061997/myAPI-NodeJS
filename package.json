@@ -23,9 +23,11 @@
   },
   "homepage": "https://github.com/alan061997/myAPI-NodeJS#readme",
   "dependencies": {
+    "async": "^2.6.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "http": "0.0.0",
+    "mysql": "^2.15.0",
     "oracledb": "^2.3.0"
   },
   "devDependencies": {
