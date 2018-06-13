@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //  Handlers Methods Requests for /users
 
@@ -20,9 +21,78 @@ router.get('/', (req, res, next) => {
 });
 
 //  Handler POST Requests for /users
+
+router.post('/login', (req, res, next) => {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;    
+    const user = {
+        email : req.body.email,
+        password : req.body.password
+    }
+
+    if (!user) {
+        return res.status(400).json({ error : true, message: 'Please provide user' });
+    } else if (!req.body.email || !req.body.password){
+        return res.status(400).json({ error : true, message: 'Please provide missing username/password' });
+    } else if (!re.test(user.email)) {
+        return res.status(422).json({
+            error : true,
+            message: "El email debe de seguir el siguiente patron: correo@dominio.com"
+        });
+    }
+
+    db.query("SELECT * FROM Users WHERE user_email = ?", [user.email], function (error, results, fields) {
+        if (error) {
+            if (!error.code === "ER_DUP_ENTRY"){
+                res.status(500).json({ 
+                    error: true, 
+                    message: 'Error in insertion of new user.' 
+                });
+            } else {
+                res.status(409).json({ 
+                    error: true, 
+                    message: 'Duplicated entry.   ' + error.message 
+                });
+            }
+            return console.log(error.code);
+        } else if (results.length < 1) {
+            res.status(401).json({
+                error : true,
+                message : "User not found."
+            });
+        } else {
+            bcrypt.compare(req.body.password, results[0].user_password, (err, resp) => {
+                if (err){
+                    return res.status(401).json({
+                        message : "Failed Log-In."
+                    });
+                }
+
+                if (resp){
+                    const token = jwt.sign(
+                    {
+                        email : results[0].user_email,
+                        id : results[0].user_id
+                    }, 
+                    "secret",
+                    {
+                        expiresIn : "1h"
+                    }
+                    )
+                    return res.status(200).json({
+                        message : "Successful Log In.",
+                        token : token
+                    })
+                }
+                res.status(401).json({
+                    message : "Failed Log-In."
+                });
+            });
+        }
+    });
+});
+
 router.post('/signup', (req, res, next) => {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;    
     bcrypt.hash(req.body.password, 10, (error, hash) => {
         if (error) {
             return res.status(500).json({
@@ -59,16 +129,6 @@ router.post('/signup', (req, res, next) => {
             });
         }
     });
-});
-
-
-router.post('/login', (res, req, next) => {
-    const user = {
-        email : req.body.email,
-        password : req.body.password
-    }
-
-
 });
 
 //  Handler GET Requests for /users/{id}
