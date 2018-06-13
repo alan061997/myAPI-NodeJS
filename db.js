@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const db = mysql.createConnection({
     host : "localhost",
     user : "alan",
-    password : "1234",
+    password : process.env.MYSQL_DB_PASS,
     database : "node-rest-shop"
 });
 

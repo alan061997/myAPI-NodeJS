@@ -1,0 +1,6 @@
+{
+    "env" : {
+        "MYSQL_DB_PASS" : "1234",
+        "JWT_WEB_TOKEN_KEY" : "secret"
+    }
+}

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../db');
+const checkAuth = require('../../middleware/check-auth');
 
 //  Handlers Methods Requests for /products
 
 //  Handler GET Requests for /products
-router.get('/', (req, res, next) => {
+router.get('/', checkAuth,(req, res, next) => {
   db.query("SELECT * FROM Products",function (error, results, fields) {
     if (error) {
       res.status(500).json({ error: true, message: 'Error in getting product list.' });
@@ -19,7 +20,7 @@ router.get('/', (req, res, next) => {
 });
 
 //  Handler POST Requests for /products
-router.post('/', (req, res, next) => {
+router.post('/', checkAuth,(req, res, next) => {
   const product = {
     id : req.body.id,
     name : req.body.name,

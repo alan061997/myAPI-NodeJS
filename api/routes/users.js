@@ -73,7 +73,7 @@ router.post('/login', (req, res, next) => {
                         email : results[0].user_email,
                         id : results[0].user_id
                     }, 
-                    "secret",
+                    process.env.JWT_WEB_TOKEN_KEY,
                     {
                         expiresIn : "1h"
                     }
