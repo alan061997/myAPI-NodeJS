@@ -1,8 +1,14 @@
+// Dependencies
+
 const express = require('express');
 const router = express.Router();
-const db = require('../../db');
+
+// Authorization module
 const checkAuth = require('../../middleware/check-auth');
+
+// Controller
 const ProductsController = require('../controller/products');
+
 
 //  Handlers Methods Requests for /products
 

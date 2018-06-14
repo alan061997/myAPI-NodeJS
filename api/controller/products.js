@@ -1,3 +1,4 @@
+// Database connection
 const db = require('../../db');
 
 exports.product_get_all = (req, res, next) => {
