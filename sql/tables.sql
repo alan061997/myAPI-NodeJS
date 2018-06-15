@@ -1,10 +1,9 @@
-use node-rest-shop;
-
 create table Products (
     product_id int not null,
     product_name varchar(50) not null,
     product_price decimal(13,2) not null,
-    constraint pk_products primary key (product_id)
+    constraint pk_products primary key (product_id),
+    constraint uk_products unique(product_name)
 );
 
 create table orders (
@@ -19,5 +18,6 @@ create table users (
     user_id int not null,
     user_email varchar(100) not null,
     user_password varchar(60) not null,
-    constraint pk_users primary key (user_id)
+    constraint pk_users primary key (user_id),
+    constraint uk_users unique(user_email)
 );

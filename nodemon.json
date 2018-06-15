@@ -1,9 +1,9 @@
 {
     "env" : {
-        "MYSQL_DB_HOST" : "localhost",
-        "MYSQL_DB_USER" : "root",
-        "MYSQL_DB_PASS" : "1234",
-        "MYSQL_DB_DATABASE" : "node-res-shop",
+        "MYSQL_DB_HOST" : "sql9.freemysqlhosting.net",
+        "MYSQL_DB_USER" : "sql9243086",
+        "MYSQL_DB_PASS" : "aKagPrW82n",
+        "MYSQL_DB_DATABASE" : "sql9243086",
         "JWT_WEB_TOKEN_KEY" : "secret"
     }
 }
