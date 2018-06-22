@@ -12,16 +12,16 @@ const OrdersController = require('../controller/orders');
 //  Handlers Method Requests for /orders
 
 //  Handler GET Requests for /orders
-router.get('/', checkAuth, OrdersController.order_get_all);
+router.get('/', OrdersController.order_get_all);
 
 //  Handler POST Requests for /orders
-router.post('/', checkAuth, OrdersController.order_create);
+router.post('/', OrdersController.order_create);
 
 //  Handler GET Requests for /orders/details
-router.get('/:orderId', checkAuth, OrdersController.order_get_one_by_id);
+router.get('/:orderId', OrdersController.order_get_one_by_id);
 
 //  Handler DELETE Requests for /orders/details
-router.delete('/:orderId', checkAuth, OrdersController.order_delete_by_id); 
+router.delete('/:orderId', OrdersController.order_delete_by_id); 
 
 
 module.exports = router;

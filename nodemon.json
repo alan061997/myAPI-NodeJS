@@ -1,9 +1,9 @@
 {
     "env" : {
         "MYSQL_DB_HOST" : "sql9.freemysqlhosting.net",
-        "MYSQL_DB_USER" : "sql9243086",
-        "MYSQL_DB_PASS" : "aKagPrW82n",
-        "MYSQL_DB_DATABASE" : "sql9243086",
+        "MYSQL_DB_USER" : "sql9244104",
+        "MYSQL_DB_PASS" : "G55IJzK2xR",
+        "MYSQL_DB_DATABASE" : "sql9244104",
         "JWT_WEB_TOKEN_KEY" : "secret"
     }
 }

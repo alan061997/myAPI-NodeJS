@@ -38,6 +38,20 @@ app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 
+app.use('/Home',(req, res, next) => {
+  res.status(201).json({
+    message : "Homepage",
+  });
+});
+
+app.use('/', (req, res, next) => {
+  if (req.url === "/"){
+    res.redirect(202, "/Home");
+  } else {
+    next();
+  }
+});
+
 app.use((req, res, next) => {
   const error = new Error('Not found');
   error.status = 404;

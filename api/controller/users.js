@@ -6,13 +6,13 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.user_get_all = (req, res, next) => {
-    db.query("SELECT * FROM Users",function (error, results, fields) {
+    db.query("SELECT * FROM users",function (error, results, fields) {
       if (error) {
         res.status(500).json({ error: true, message: 'Error in getting user list.' });
         return console.log(error.message);
       }
       res.status(200).json({
-        message: 'Users List',
+        message: 'users List',
         data: results,
       });
     });  
@@ -36,7 +36,7 @@ exports.user_login = (req, res, next) => {
       });
   }
 
-  db.query("SELECT * FROM Users WHERE user_email = ?", [user.email], function (error, results, fields) {
+  db.query("SELECT * FROM users WHERE user_email = ?", [user.email], function (error, results, fields) {
       if (error) {
           if (!error.code === "ER_DUP_ENTRY"){
               res.status(500).json({ 
@@ -111,7 +111,7 @@ exports.user_signup = (req, res, next) => {
                   message: "El email debe de seguir el siguiente patron: correo@dominio.com"
               });
           }
-          db.query("INSERT INTO Users (user_id, user_email, user_password) VALUES (?, ?, ?)", [user.id, user.email, user.password], function (error, results, fields) {
+          db.query("INSERT INTO users (user_id, user_email, user_password) VALUES (?, ?, ?)", [user.id, user.email, user.password], function (error, results, fields) {
               if (error) {
                   if (!error.code === "ER_DUP_ENTRY"){
                       res.status(500).json({ error: true, message: 'Error in insertion of new user.' });
@@ -135,7 +135,7 @@ exports.user_get_by_id = (req, res, next) => {
       message : "Missing id"
     });
   } else {
-    db.query("SELECT * FROM Users WHERE user_id = ?", [id], function (error, results, fields) {
+    db.query("SELECT * FROM users WHERE user_id = ?", [id], function (error, results, fields) {
       if (error) {
         res.status(500).json({ error: true, message: 'Error in selection of user.' });
         return console.log(error.message);
@@ -168,7 +168,7 @@ exports.user_patch_by_id = (req, res, next) => {
     res.status(400).json({ error:true, message: 'Please provide missing parameters' });
   }
 
-  db.query("UPDATE Users SET user_email = ?, user_password = ? WHERE user_id = ?", [user.email, user.password, u_id], function (error, results, fields) {
+  db.query("UPDATE users SET user_email = ?, user_password = ? WHERE user_id = ?", [user.email, user.password, u_id], function (error, results, fields) {
     if (error) {
       res.status(500).json({ error: true, message: 'Error in updating of user.' });
       return console.log(error.message);
@@ -194,7 +194,7 @@ exports.user_delete_by_id = (req, res, next) => {
       message : "Missing id"
     });
   } else {
-    db.query("DELETE FROM Users WHERE user_id = ?", [id], function (error, results, fields) {
+    db.query("DELETE FROM users WHERE user_id = ?", [id], function (error, results, fields) {
       if (error) throw error;
       if (results.affectedRows == 0){
         res.status(404).json({

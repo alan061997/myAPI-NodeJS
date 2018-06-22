@@ -2,7 +2,7 @@
 const db = require('../../db');
 
 exports.order_get_all = (req, res, next) => {
-    db.query("SELECT * FROM Orders",function (error, results, fields) {
+    db.query("SELECT * FROM orders",function (error, results, fields) {
       if (error) {
         res.status(500).json({ 
           error: true, 
@@ -25,7 +25,7 @@ exports.order_get_one_by_id = (req, res, next) => {
         message : "Missing id"
       });
     } else {
-      db.query("SELECT * FROM Orders WHERE order_id = ?", [id], function (error, results, fields) {
+      db.query("SELECT * FROM orders WHERE order_id = ?", [id], function (error, results, fields) {
         if (error) {
           res.status(500).json({ error: true, message: 'Error in selection of product.' });
           return console.log(error.message);
@@ -62,7 +62,7 @@ exports.order_create = (req, res, next) => {
         });
     }
 
-    db.query("INSERT INTO Orders (order_id, product_id, product_quantity) VALUES (?, ?, ?)", [order.order_id, order.product_id, order.quantity], function (error, results, fields) {
+    db.query("INSERT INTO orders (order_id, product_id, product_quantity) VALUES (?, ?, ?)", [order.order_id, order.product_id, order.quantity], function (error, results, fields) {
         if (error) {
         res.status(500).json({ 
             error: true, 
@@ -86,7 +86,7 @@ exports.order_delete_by_id = (req, res, next) => {
         message : "Missing id"
         });
     } else {
-        db.query("DELETE FROM Orders WHERE order_id = ?", [id], function (error, results, fields) {
+        db.query("DELETE FROM orders WHERE order_id = ?", [id], function (error, results, fields) {
         if (error) {
             res.status(500).json({ 
             error: true, 
@@ -97,7 +97,7 @@ exports.order_delete_by_id = (req, res, next) => {
         if (results.affectedRows == 0){
             res.status(404).json({
             error: true,
-            message: 'Orders not found'
+            message: 'orders not found'
             });
         } else {
             res.status(200).json({

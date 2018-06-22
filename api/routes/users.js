@@ -24,10 +24,10 @@ router.post('/signup', UsersController.user_signup);
 router.get('/:userId', UsersController.user_get_by_id);
 
 //  Handler PATCH Requests for /users/{id}
-router.patch('/:userId', checkAuth, UsersController.user_patch_by_id);
+router.patch('/:userId', UsersController.user_patch_by_id);
 
 //  Handler DELETE Requests for /users/{id}
-router.delete('/:userId', checkAuth, UsersController.user_delete_by_id);
+router.delete('/:userId', UsersController.user_delete_by_id);
 
 
 module.exports = router;
