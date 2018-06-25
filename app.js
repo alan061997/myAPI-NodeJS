@@ -62,6 +62,7 @@ app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({
     error: {
+      url : req.url,
       message: error.message
     }
   });
