@@ -33,7 +33,8 @@ exports.product_get_by_id = (req, res, next) => {
         }
         if (!results.length) {
             res.status(404).json({
-            message: 'No item with that id.',
+              id: id,
+              message: 'No item with that id.'
             });
         } else {
             res.status(200).json({
