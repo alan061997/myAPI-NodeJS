@@ -11,7 +11,7 @@ create table orders (
     product_id int not null,
     product_quantity int not null,
     constraint pk_orders primary key (order_id),
-    constraint fk_orders foreign key (product_id) references products(product_id)
+    constraint fk_orders foreign key (product_id) references products(product_id) on delete cascade
 );
 
 create table users (
